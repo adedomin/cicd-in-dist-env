@@ -1,6 +1,11 @@
 CICD - Independent Study
 ========================
 
+Blog
+----
+
+The [blog](http://adedomin.github.io/cicd-in-dist-env) is where I will make posts indicating what I've been learning and progress on my paper and other projects related to the independent study.
+
 Outline - as required
 ---------------------
 
