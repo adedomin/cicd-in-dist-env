@@ -2,10 +2,11 @@
 
 DATE=$(date "+%Y-%m-%d")
 TIME=$(date "+%H:%M:%S")
-FILENAME="$DATE-$1.md"
+FILENAME=`sed 's/ /-/g' <<< "$@"`
+FILENAME="$DATE-$FILENAME.md"
 echo "---" >> _posts/"$FILENAME"
 echo "layout: post" >> _posts/"$FILENAME"
-echo "title: $1" >> _posts/"$FILENAME"
+echo "title: $@" >> _posts/"$FILENAME"
 echo "date: $DATE $TIME" >> _posts/"$FILENAME"
 echo "---" >> _posts/"$FILENAME"
-vim _posts/"$DATE-$1.md"
+vim _posts/"$FILENAME"
