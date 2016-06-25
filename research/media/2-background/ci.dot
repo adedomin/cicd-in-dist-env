@@ -1,0 +1,10 @@
+digraph agraph {
+
+	devs -> scm [label="commit changes"];
+	scm -> remote_scm_repo [label="push changes"];
+	remote_scm_repo -> ci [label="poll for changes"];
+	ci -> devs [label="reporting, unit/mock test results"];
+	ci -> if_pass; 
+	if_pass -> binary_repo [label="built"];
+	if_pass -> package_repo [label="tested (scripting)"];
+}
