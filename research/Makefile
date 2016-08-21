@@ -1,7 +1,7 @@
 DOC=pandoc
 DOCFLAGS=--filter pandoc-citeproc --csl=./style/ieee.csl
 DOCNAME=cicd-dedominica
-DOCTYPE=.pdf
+DOCTYPE=pdf
 DOCOBJ=./content/*.md
 DOCHEAD=paper-head.md
 DOCTAIL=paper-tail.md
@@ -9,9 +9,9 @@ DOCTAIL=paper-tail.md
 all: doc
 	
 doc:
-	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) -o $(DOCNAME)$(DOCTYPE) $(DOCFLAGS)
+	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) -o $(DOCNAME).$(DOCTYPE) $(DOCFLAGS)
 
-# you can do make DOCTYPE=.type instead
+# you can do make DOCTYPE=type instead
 pdf:
 	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) -o $(DOCNAME).pdf $(DOCFLAGS)
 

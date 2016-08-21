@@ -25,6 +25,11 @@ header-includes:
 - \fancyfoot[L]{CICD - DeDominic}
 - \fancyfoot[C]{}
 - \fancyfoot[R]{\thepage}
+- \usepackage[x11names, rgb]{xcolor}
+- \usepackage[utf8]{inputenc}
+- \usepackage{tikz}
+- \usetikzlibrary{snakes,arrows,shapes}
+- \usepackage{amsmath}
 - \twocolumn
 - \author{DeDominic, Anthony\\Eastern Connecticut State University\\Willimantic, USA\\dedominica@my.easternct.edu}
 
