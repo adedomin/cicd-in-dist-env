@@ -28,3 +28,13 @@ The yaml is parsed into a simple object that is a collection of key value pairs,
 From there, the ansible tool creates a python script by using the data contained in the parsed result.
 Calls to modules and other such things in the parsed structure are replaced with literal python source.
 Effectively, it's just a translation to library calls.
+
+### In CI
+
+Travis CI makes use of a domain specific language to configure one time build and testing environments for programs.
+Using a yaml source file, the developer can specify the needed build, and environment settings to define tests to be executed and ran.
+This file is then translated using ruby's extensive metaprogramming facilities into actionable code on Travis-CI's systems to build virtual machines to carry out the instructions laid out.
+
+Jenkins has it's own descriptive language which allows it to do something similar to travis-ci.
+However many claim the richness of the language, especially when working with plugins in Jenkins, can make it unwieldy and challenging to use.
+It ultimately shows that a domain specific language should be very straightforward for it to be useful.
