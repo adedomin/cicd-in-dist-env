@@ -6,9 +6,13 @@
 ==========================================
 
   * DSL
-    * Limited scope, easy to solve singular task
+    * Limited scope, 
+    * easy to solve singular problem
+      * Flex/Bison
+      * shell utils: sed, awk, etc.
     * Composed into general languages
-    * Obfuscated library calls
+      * IR -> python, javascript, shell
+    * Abstracted library calls
     * Similar to PHP's origin
   * Challenges
     * scope creep
