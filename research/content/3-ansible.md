@@ -29,7 +29,8 @@ From there, the ansible tool creates a python script by using the data contained
 Calls to modules and other such things in the parsed structure are replaced with literal python source.
 Effectively, it's just a translation to library calls.
 
-### In CI
+3.1. In CI
+----------
 
 Travis CI makes use of a domain specific language to configure one time build and testing environments for programs.
 Using a yaml source file, the developer can specify the needed build, and environment settings to define tests to be executed and ran.
