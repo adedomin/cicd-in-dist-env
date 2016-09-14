@@ -12,8 +12,9 @@ The goal of the language is to solve the following.
   * Irreversibility of many configuration management tools.
     * Many of the tools in use make untracked, and ultimately, difficult to revert, changes to the filesystem.
     * Tools should track needed changes to the filesystem so that they can be removed and cleaned up or possibly updated later.
-    * Many devops manuals expect you to do AB deployments to prevent this issue.
+    * Many devops manuals expect you to do A-B deployments to prevent this issue.
       * A and B as in, when a new deployment needs to occur, build a new machine to deploy to and if it breaks, bring back the old machine.
+      * Some systems take it to the extreme by having the OS be an immutable source tree which is entirely redeployed or reverted on changes.
   * Resolving build tool, and other environment specific dependencies
     * There a various tools for languages like java: gradle, maven, ant, etc.
     * These tools may not be installed on the CI server.
@@ -32,7 +33,7 @@ The goal of the language is to solve the following.
 DSL should feature:
 
   * Multi-paradigm for describing deployments
-    * graphs
+    * graphs (Metamodeling - or Model driven)
       * Ideally with a drawing tool
       * Alternatively, users could make graphs using the DOT language, or another simplier graph language
     * sequential steps (yaml|toml|json|etc)
@@ -44,6 +45,7 @@ DSL should feature:
     * Integration (testing)
     * Packaging (artifacting)
     * Deployment
+    * Configuration Management
   * "Agentless" service
     * Utilize builtins only
     * Scripting languages

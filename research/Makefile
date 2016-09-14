@@ -1,5 +1,5 @@
 DOC=pandoc
-DOCFLAGS=--filter pandoc-citeproc --csl=./style/ieee.csl
+DOCFLAGS=--filter pandoc-citeproc --csl=./style/ieee.csl --self-contained
 DOCNAME=cicd-dedominica
 DOCTYPE=pdf
 DOCOBJ=./content/*.md
@@ -11,13 +11,18 @@ all: doc
 doc:
 	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) -o $(DOCNAME).$(DOCTYPE) $(DOCFLAGS)
 
-# you can do make DOCTYPE=type instead
+# changes figure to figure* so figures break two column layout
 pdf:
-	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) -o $(DOCNAME).pdf $(DOCFLAGS)
+	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) $(DOCFLAGS) --to latex \
+		| sed 's/figure/figure\*/' | pdflatex --jobname=$(DOCNAME)
+	rm *.aux *.log *.out
 
 # for professor
 docx:
 	$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) -o $(DOCNAME).docx $(DOCFLAGS)
+
+json:
+	@$(DOC) $(DOCHEAD) $(DOCOBJ) $(DOCTAIL) $(DOCFLAGS) --to json
 
 clean:
 	rm $(DOCNAME).*

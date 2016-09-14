@@ -10,6 +10,7 @@
 CICD is the process of accelerating the building, testing and installation of applications to end servers .
 In a world where web technology moves fast and new features are ideal, it's critical to go to market fast.
 To do this there are two major architectures that are used.
+
 CI, continuous integration is concerned with the development process.
 In the realm of continuous integration there is usually a source code repository.
 The source code repository is usually technologies like git, svn, cvs or other version and source controlling software.
@@ -23,6 +24,8 @@ Other such triggers, like diff checking, can be used to trigger code reviews for
 Generally, the final stage of Continuous Integration is to notify the developers, or other interested parties, the results of these various tests and builds.
 In a full CICD build pipeline, generally there is the process of uploading so called artifacts to a artifact or binary repository.
 These binary repositories are more in the realm of continuous delivery.
+
+![An example Continuous Integration Workflow](media/ci.png)
 
 Continuous delivery also has it's share of tools and structure.
 One of the first requirements of continuous delivery is having some form of binary repository.
@@ -49,3 +52,7 @@ In an environment with fixed inventory, it might not be ideal to do things like 
 However in an environment where machines can be spun up at whim, or even automatically, it wouldn't matter as much; in such cases one would simply destroy and create a new machine for every deployment.
 In a fixed architecture, it might be ideal to stick to package management solutions for delivering binaries.
 It might not matter if it is dynamic as the cleanliness of the system.
+
+![Example Continuous Deployment setup[^cd]](media/cd.png)
+
+[^cd]: more akin to a uDeploy setup, a master server orchestrates actions to be take against numerous machines; generally the machines fetch the binaries they need to install from an artifact repository. Master can be triggered to action by the CI system as well.

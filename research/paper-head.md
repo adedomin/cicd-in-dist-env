@@ -30,6 +30,7 @@ header-includes:
 - \usepackage{tikz}
 - \usetikzlibrary{snakes,arrows,shapes}
 - \usepackage{amsmath}
+# disabled til cleaner figuring is found
 - \twocolumn
 - \author{DeDominic, Anthony\\Eastern Connecticut State University\\Willimantic, USA\\dedominica@my.easternct.edu}
 
