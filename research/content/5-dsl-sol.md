@@ -11,31 +11,69 @@ Below will be the explanation of a new DSL that I will develop that will attempt
 Ideally, to also merge them into a universal testing, packaging and deployment framework.
 The goals of the language are to solve the following shortfalls: 
 
-  * Irreversibility of many configuration management tools (ansible, puppet).
-    * Many of the tools in use make untracked, and ultimately, difficult to revert, changes to the filesystem.
-    * Tools should track needed changes to the filesystem so that they can be removed and cleaned up or possibly updated later.
-    * Many CICD ("DevOps") manuals expect you to do A-B deployments to prevent reversibility issue (link to red hat customer portal).
-      * A and B as in, when a new deployment needs to occur, build a new machine (say b) to deploy to and if it breaks, bring back the old machine (a in this example).
-      * Some systems, for example CoreOS and Red Hat Atomic, take it to the extreme by having the OS be an immutable source tree which is entirely.
-  * Resolving build tool, and other environment specific dependencies (jenkins)
-    * There a various tools for languages like java: gradle, maven, ant, etc.
-    * These tools may not be installed on the CI server.
-    * To work around this, gradle and maven offer "wrapper" scripts.
-      * This requires your project to ship with a gradle or maven jar files, java binaries.
-    * In C/C++, people could be using GNU Autoconf, CMake or even Microsoft Visual Studio
-  * Lack of pull and push centric deployment architectures.
-    * Tools depend on shell-like protocols to deploy binaries which can be resource intensive and slow for massive deployments.
-    * Pull architectures allow for servers to fetch their own binaries.
-  * Clean artifacting of configurations out of binaries/scripts
-    * uDeploy offers the concept of artifacts, which allows for composing deployments by combining versioned artifacts.
-    * For instance, uDeploy allows for artifacting the following: 
-      * binaries
-      * database deployment/initialization scripts
-      * configurations
-  * Confusing structure and execution flow of deployments
-    * Order is critical in deployment.
-      * e.g. services can't start if the binaries for the service are not available yet.
-    * Tools like Ansible and Puppet may not execute a set of tasks or roles in the order they are written, it's generally recommended one uses listeners and/or handlers and signal them to prevent ordering issues.
+5.1. Irreversibility
+---------------------
+
+As Stated earlier, many deployment tools make large numbeer of untraced changes to the filesystem.
+Such changes as creating directories, inserting configs, binaries, scripts and other such files.
+Other changes, like new users, added and enabled servicesand other such changes to configurations are also untracked.
+
+What is proposed is a simple key-value like database which can contain package name as keys and a value which is a document of changes -(more detail)-.
+
+### 5.1.1. Detractions
+
+The problem is, many CICD, or "DevOps", manuals expect you to do A-B deployments to prevent reversibility issue -(link to red hat customer portal)-.
+This way, when issues arises, the DevOps engineer can simply destroy the new machine and go back to the old one.
+Vise versa if the new machine is successful, the old one is destroyed.
+To take it to an extreme, using docker and docker container OSes like CoreOS and Red Hat Atomic Linux, The whole operating system is to be considered immutable and any updates should destroy the previous state of the machine.
+
+5.2. Build and Testing Tool Dependencies
+----------------------------------------
+
+One of the biggest problems in the CI space is dealing with the demands of developers and the tools they need.
+Jenkins for instance is very difficult to work with when developers try to use tools that aren't available on the jenkins master, or worse, the slave.
+As a result, self hosted CI tools like Jenkins depend on a very rich set of plugins that try to solve these "dependency hell" problems.
+
+Certain build tools like Apache Maven and Gradle use the concept of "wrappers" which are usually shell scripts that "resolve" the build tool binary of the specified version. However most depend on a binary .jar file to accomplish this.
+
+### 5.2.1. Provided Services
+
+For testing, it may be ideal to have services such as databases.
+Currently, it's the same problem with build tools; either the server is provided, externally or locally.
+It would be ideal to handle this problem in the language as well.
+
+5.3. Options in Deployments
+---------------------------
+
+Currently, tools depend on remote shell protocols, as described earlier;
+however, shell protocol security can make it costly to open connections and to send data to them.
+For security reasons, concepts like asynchronous callbacks, can be difficult to achieve via shell protocols;
+unless of course the server can ssh into the deployment server (I have never seen this in practice).
+
+Ideally, for updating, there should be optional, web centric way of pulling changes.
+Currently ansible is deployed manually, over shell.
+After the initial deployment, there could be a script which would allow for "pulling" updates over the network.
+To make ansible more as an automated service, projects like loopabull can add automation to the whole process.
+
+5.4. "Artifacting"
+------------------
+
+The concept of artifacting is separating out the various components of an application into these versioned components.
+Currently only uDeploy, as far as I know, offers such a construct.
+
+The advantage of this is deployments are broken into logical pieces.
+The Other advantage is the pieces are versioned as well;
+This gives a user the ability to fine tune the product to find the best composition of versioned artifacts.
+
+5.5. Order of execution
+------------------------
+
+Tools like ansible and puppet depend on tasks executing in a particular order. 
+To attempt to add ordering, they add concepts like listeners and handlers.
+However, it can be confusing at time and add unneeded complexity for simple tasks.
+
+Ideally one would be able to use monadic constructs to add ordering, but to functionally encapsulate the side effect laden issues of deployment.
+This could also help solve the irreversibly problem.
 
 DSL should feature:
 
