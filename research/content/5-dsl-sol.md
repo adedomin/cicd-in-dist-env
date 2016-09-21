@@ -14,9 +14,9 @@ The goals of the language are to solve the following shortfalls:
 5.1. Irreversibility
 ---------------------
 
-As Stated earlier, many deployment tools make large numbeer of untraced changes to the filesystem.
-Such changes as creating directories, inserting configs, binaries, scripts and other such files.
-Other changes, like new users, added and enabled servicesand other such changes to configurations are also untracked.
+As Stated earlier, many deployment tools make large number of untracked changes to the file system.
+Such changes as creating directories, inserting configurations, binaries, scripts and other such files.
+Other changes, like new users, added and enabled services, etc... to configurations are also untracked.
 
 What is proposed is a simple key-value like database which can contain package name as keys and a value which is a document of changes -(more detail)-.
 
@@ -30,11 +30,20 @@ To take it to an extreme, using docker and docker container OSes like CoreOS and
 5.2. Build and Testing Tool Dependencies
 ----------------------------------------
 
+Currently as it stands, most centralized CI systems depend on the infrastructure or operations team to manage needed build tool, and other testing, tools which can hinder the progress of developers to do their work;
+ideally developers will be able to dictate their requirements and have them be met automatically, which is currently an issue with all the major CI build systems. 
+
 One of the biggest problems in the CI space is dealing with the demands of developers and the tools they need.
-Jenkins for instance is very difficult to work with when developers try to use tools that aren't available on the jenkins master, or worse, the slave.
+Jenkins for instance is very difficult to work with when developers try to use tools that aren't available on the jenkins build server or servers.
 As a result, self hosted CI tools like Jenkins depend on a very rich set of plugins that try to solve these "dependency hell" problems.
 
-Certain build tools like Apache Maven and Gradle use the concept of "wrappers" which are usually shell scripts that "resolve" the build tool binary of the specified version. However most depend on a binary .jar file to accomplish this.
+Certain build tools like Apache Maven and Gradle use the concept of "wrappers" which are usually shell scripts that "resolve" the build tool binary of the specified version.
+However most depend on a binary file to accomplish this (describe issues with this?).
+One of the issues with this is that, at a later date, if there are issues with the version being used or it is no longer available, many projects would need to be manually updated to use new versions of the build tool.
+Binaries also pollute the source tree since they can not be differenced as easily as plain text documents, making it hard to track changes on the binary;
+this can also cause issues with the size of the repo.
+This also leads to having multiple copies of the same tool everywhere, with slightly different versions.
+If for any reason these tools have bugs or worse, some kind of vulnerability, repositories would have to be assessed for this "broken" version.
 
 ### 5.2.1. Provided Services
 
